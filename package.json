@@ -1,0 +1,28 @@
+{
+  "name": "flux-backbone-todo",
+  "author": "Stuart Rackham",
+  "description": "Didactic Todo app written using Flux, Backbone and React.",
+  "version": "1.0.0",
+  "keywords": [
+    "flux",
+    "react",
+    "reactjs",
+    "backbone",
+    "todo",
+    "todomvc"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/srackham/flux-backbone-todo"
+  },
+  "dependencies": {
+    "backbone": "^1.1.2",
+    "flux": "^2.0.1",
+    "jquery": "^2.1.1",
+    "react": "^0.12.1"
+  },
+  "devDependencies": {
+    "jsx-loader": "^0.12.2",
+    "webpack": "^1.4.13"
+  }
+}
