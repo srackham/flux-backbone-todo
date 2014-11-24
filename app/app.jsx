@@ -34,7 +34,7 @@ var TodoStore = Backbone.Collection.extend({
 
   initialize: function(models, options) {
     this.dispatcher = options.dispatcher;
-    this.dispatchToken = this.dispatcher.register(this.dispatchCallback.bind(this));
+    this.dispatchId = this.dispatcher.register(this.dispatchCallback.bind(this));
   },
 
   dispatchCallback: function(payload) {
@@ -105,7 +105,7 @@ var TodoListComponent = React.createClass({
         function() {
           console.log('[TodoStore: add remove reset]');
           this.forceUpdate();
-        }, this);
+        }.bind(this));
   },
 
   componentWillUnmount: function() {
@@ -136,7 +136,7 @@ var TodoItemComponent = React.createClass({
         function() {
           console.log('[TodoItem: change]');
           this.forceUpdate();
-        }, this);
+        }.bind(this));
   },
 
   componentWillUnmount: function() {
