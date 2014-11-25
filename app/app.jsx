@@ -1,6 +1,6 @@
 /*
-  Simple Todo app written using Flux, Backbone and React.
-  https://github.com/srackham/flux-backbone-todo
+ Simple Todo app written using Flux, Backbone and React.
+ https://github.com/srackham/flux-backbone-todo
  */
 
 var React = require('react');
@@ -81,13 +81,13 @@ var TodoFormComponent = React.createClass({
 
   render: function() {
     return (
-        <div>
-          <form  onSubmit={this.handleAddTodo}>
-            <input ref='text' type='text'  placeholder='New Todo' autofocus='true' />
-            <input type='submit' value='Add Todo' />
-          </form>
-          <button onClick={this.handleClearTodos}>Clear Completed</button>
-        </div>
+      <div>
+        <form  onSubmit={this.handleAddTodo}>
+          <input ref='text' type='text'  placeholder='New Todo' autofocus='true' />
+          <input type='submit' value='Add Todo' />
+        </form>
+        <button onClick={this.handleClearTodos}>Clear Completed</button>
+      </div>
     );
   }
 });
@@ -102,10 +102,11 @@ var TodoListComponent = React.createClass({
 
   componentDidMount: function() {
     this.props.store.on('add remove reset',
-        function() {
-          console.log('[TodoStore: add remove reset]');
-          this.forceUpdate();
-        }.bind(this));
+      function() {
+        console.log('[TodoStore: add remove reset]');
+        this.forceUpdate();
+      }.bind(this)
+    );
   },
 
   componentWillUnmount: function() {
@@ -115,9 +116,9 @@ var TodoListComponent = React.createClass({
   render: function() {
     var items = this.props.store.map(function(todoItem) {
       return (
-          <li key={todoItem.cid}>
-            <TodoItemComponent todoItem={todoItem} />
-          </li>);
+        <li key={todoItem.cid}>
+          <TodoItemComponent todoItem={todoItem} />
+        </li>);
     });
     return <ul>{items}</ul>;
   }
@@ -133,10 +134,11 @@ var TodoItemComponent = React.createClass({
 
   componentDidMount: function() {
     this.props.todoItem.on('change',
-        function() {
-          console.log('[TodoItem: change]');
-          this.forceUpdate();
-        }.bind(this));
+      function() {
+        console.log('[TodoItem: change]');
+        this.forceUpdate();
+      }.bind(this)
+    );
   },
 
   componentWillUnmount: function() {
@@ -151,9 +153,9 @@ var TodoItemComponent = React.createClass({
     var complete = this.props.todoItem.get('complete');
     var style = {cursor: 'pointer', textDecoration: complete ? 'line-through' : ''};
     return (
-        <span style={style} onClick={this.handleToggleTodo}>
+      <span style={style} onClick={this.handleToggleTodo}>
           {this.props.todoItem.get('text')}
-        </span>
+      </span>
     );
   }
 
@@ -166,15 +168,15 @@ var dispatcher = new Flux.Dispatcher();
 var todoStore = new TodoStore([], {dispatcher: dispatcher});
 
 React.render(
-    <div>
-      <h3>Todos</h3>
-      <TodoFormComponent store={todoStore} />
-      <TodoListComponent store={todoStore} />
-      <p>
-      Want a second fully synchronized list? Just declare another list component: no code required,
-      no events to wire up!
-      </p>
-      <TodoListComponent store={todoStore} />
-    </div>,
-    document.getElementById('app')
+  <div>
+    <h3>Todos</h3>
+    <TodoFormComponent store={todoStore} />
+    <TodoListComponent store={todoStore} />
+    <p>
+    Want a second fully synchronized list? Just declare another list component: no code required,
+    no events to wire up!
+    </p>
+    <TodoListComponent store={todoStore} />
+  </div>,
+  document.getElementById('app')
 );
