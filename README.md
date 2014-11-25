@@ -125,8 +125,28 @@ and run:
 
 
 ## Lessons learnt
-- When passing callbacks between Dispatcher, Stores and Views be
-  careful that they are bound to the correct context.
+- As always in JavaScript, when you pass a callback you need to ensure
+  that they are bound to the correct context. In the following example
+  the Backbone Model event handler's context is bound to the current
+  object:
+
+        this.props.store.on('change',
+            function() {
+              this.forceUpdate();
+            }.bind(this)
+        );
+
+- When binding you need to take caller and callee arguments into
+  consideration. The previous example can be simplified by passing
+  `forceUpdate` as the change handler callback, but if you do not
+  remember to explicitly bind the `forceUpdate` first argument to
+  `null` the program will throw an error because `forceUpdate` would
+  be called by the Backbone event dispatcher with a first argument
+  that is not a callback (namely the changed Backbone model):
+
+        this.props.store.on('change',
+          this.forceUpdate.bind(this, null)
+        );
 
 - Backbone Model attributes are not model properties -- access them
   with `get()` and `set()` not with the dot syntax.
