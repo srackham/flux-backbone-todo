@@ -38,7 +38,6 @@ var TodoStore = Backbone.Collection.extend({
   },
 
   dispatchCallback: function(payload) {
-    console.log('[Dispatch:', payload, ']');
     switch (payload.action) {
       case ADD_TODO:
         this.add({text: payload.text}, {dispatcher: this.dispatcher});
@@ -65,7 +64,6 @@ var TodoFormComponent = React.createClass({
   },
 
   handleAddTodo: function(event) {
-    console.log('[handleAddTodo]');
     event.preventDefault();
     var text = this.refs.text.getDOMNode();
     if (text.value.length > 0) {
@@ -75,7 +73,6 @@ var TodoFormComponent = React.createClass({
   },
 
   handleClearTodos: function() {
-    console.log('[handleClearTodos]');
     this.props.store.dispatcher.dispatch({action: CLEAR_TODOS});
   },
 
@@ -102,10 +99,7 @@ var TodoListComponent = React.createClass({
 
   componentDidMount: function() {
     this.props.store.on('add remove reset',
-      function() {
-        console.log('[TodoStore: add remove reset]');
-        this.forceUpdate();
-      }.bind(this)
+      this.forceUpdate.bind(this, null)
     );
   },
 
@@ -134,10 +128,7 @@ var TodoItemComponent = React.createClass({
 
   componentDidMount: function() {
     this.props.todoItem.on('change',
-      function() {
-        console.log('[TodoItem: change]');
-        this.forceUpdate();
-      }.bind(this)
+      this.forceUpdate.bind(this, null)
     );
   },
 
