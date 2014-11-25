@@ -90,7 +90,10 @@ React
 API which could have performance implications for complex React UIs.
 See this [excellent
 discussion](http://stackoverflow.com/questions/21709905/can-i-avoid-forceupdate-when-using-react-with-backbone)
-explains the issue and, if necessary,  how to resolve it.
+explains the issue and, if necessary, strategies to resolve it.  React
+does a great job of DOM update optimization so I would stick with the
+simplicity of using `forceUpdate` until confronted with a real use
+case to the contrary.
 
 
 ## Building and Running
