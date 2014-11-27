@@ -8,8 +8,9 @@ This didactic Todo app was written to illustrate the
 
 Flux is a design pattern for building scaleable applications using a
 Unidirectional Data Flow (it is not a Web development framework), the
-Flux library implements a Dispatcher which works well with the Flux
-design pattern.
+Flux library implements a
+[Dispatcher](http://facebook.github.io/flux/docs/dispatcher.html).
+which works well with the Flux design pattern.
 
 The Todo app is implemented using
 [Flux](http://facebook.github.io/react/blog/2014/05/06/flux.html),
