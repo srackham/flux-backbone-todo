@@ -26,11 +26,17 @@ var BackboneLocalStorage = function(name) {
   this.data = (json && JSON.parse(json)) || {};
 };
 
+var syncCache = {};
+
 // Returns a Backbone sync function that is bound to the options.name localStorage item.
 // This is the only object exported by the module.
 module.exports = BackboneLocalStorage.sync = function(name) {
-  var localStorage = new BackboneLocalStorage(name);
-  return localStorage.sync.bind(localStorage);
+  // Ensure there is only on sync adapter per localStorage item.
+  if (!syncCache[name]) {
+    var localStorage = new BackboneLocalStorage(name);
+    syncCache[name] = localStorage.sync.bind(localStorage);
+  }
+  return syncCache[name];
 };
 
 _.extend(BackboneLocalStorage.prototype, {

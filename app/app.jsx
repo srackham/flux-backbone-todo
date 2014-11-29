@@ -16,15 +16,12 @@ var ADD_TODO = 'ADD_TODO';
 var TOGGLE_TODO = 'TOGGLE_TODO';
 var CLEAR_TODOS = 'CLEAR_TODOS';
 
-// Create localStorage sync function for Todo Model and Todo Collection.
-var localStorageSync = BackboneLocalStorageSync('flux-backbone-todo');
-
 /*
  Todo item model.
  */
 var TodoItem = Backbone.Model.extend({
   defaults: {text: '', complete: false},
-  sync: localStorageSync,
+  sync: BackboneLocalStorageSync('flux-backbone-todo'),
 
   initialize: function(attributes, options) {
     this.dispatcher = options.dispatcher;
@@ -37,7 +34,7 @@ var TodoItem = Backbone.Model.extend({
  */
 var TodoStore = Backbone.Collection.extend({
   model: TodoItem,
-  sync: localStorageSync,
+  sync: BackboneLocalStorageSync('flux-backbone-todo'),
 
   initialize: function(models, options) {
     this.dispatcher = options.dispatcher;
