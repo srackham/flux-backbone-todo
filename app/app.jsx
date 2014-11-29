@@ -2,6 +2,7 @@
  Simple Todo app written using Flux, Backbone and React.
  https://github.com/srackham/flux-backbone-todo
  */
+'use strict';
 
 var React = require('react');
 var Flux = require('flux');

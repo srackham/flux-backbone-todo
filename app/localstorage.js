@@ -1,15 +1,18 @@
 // A simple CommonJS module to replace Backbone.sync` with browser localStorage.
 //
+// NOTE: Because localStorage requests execute synchronously the fetch, save and destroy
+// APIs are also synchronous.
+//
 // https://github.com/addyosmani/backbone-fundamentals/blob/gh-pages/practicals/modular-todo-app/js/libs/backbone/localstorage.js
 //
 // Stuart Rackham: November 2014:
-// Converted to a node compatible module for use by Browserify/Webpack;
-// removed Underscore dependency; comments and refactoring.
+// Converted to a node compatible module for use by Browserify/Webpack; comments and refactoring.
 //
 
 'use strict';
 
 var Backbone = require('backbone');
+var _ = require('backbone/node_modules/underscore');
 
 // Constructor function for creating Backbone sync adaptor objects.
 var LocalStorage = function(name) {
@@ -20,7 +23,8 @@ var LocalStorage = function(name) {
 };
 module.exports = LocalStorage;
 
-var localStorageFunctions = {
+// Mixin LocalStorage methods.
+_.extend(LocalStorage.prototype, {
 
   saveData: function() {
     window.localStorage.setItem(this.name, JSON.stringify(this.data));
@@ -44,12 +48,8 @@ var localStorageFunctions = {
   },
 
   findAll: function() {
-    // Return array of model attribute hashes.
-    return Object.keys(this.data).map(
-      function(id) {
-        return this.data[id];
-      }.bind(this)
-    );
+    // Return array of all models attribute hashes.
+    return _.values(this.data);
   },
 
   destroy: function(model) {
@@ -58,10 +58,7 @@ var localStorageFunctions = {
     return model.toJSON();
   }
 
-};
-for (var name in localStorageFunctions) {
-  LocalStorage.prototype[name] = localStorageFunctions[name];
-}
+});
 
 // Generate four random hex digits.
 function s4() {
