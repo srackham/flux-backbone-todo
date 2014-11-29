@@ -7,7 +7,7 @@
 var React = require('react');
 var Flux = require('flux');
 var Backbone = require('backbone');
-var LocalStorage = require('./localstorage.js');
+var BackboneLocalStorageSync = require('./backbone-localstorage.js');
 
 /*
  Dispatcher actions.
@@ -16,11 +16,15 @@ var ADD_TODO = 'ADD_TODO';
 var TOGGLE_TODO = 'TOGGLE_TODO';
 var CLEAR_TODOS = 'CLEAR_TODOS';
 
+// Create localStorage sync function for Todo Model and Todo Collection.
+var localStorageSync = BackboneLocalStorageSync('flux-backbone-todo');
+
 /*
  Todo item model.
  */
 var TodoItem = Backbone.Model.extend({
   defaults: {text: '', complete: false},
+  sync: localStorageSync,
 
   initialize: function(attributes, options) {
     this.dispatcher = options.dispatcher;
@@ -33,7 +37,7 @@ var TodoItem = Backbone.Model.extend({
  */
 var TodoStore = Backbone.Collection.extend({
   model: TodoItem,
-  localStorage: new LocalStorage('flux-backbone-todo'),
+  sync: localStorageSync,
 
   initialize: function(models, options) {
     this.dispatcher = options.dispatcher;
@@ -46,7 +50,9 @@ var TodoStore = Backbone.Collection.extend({
     });
     // Load models from localStorage and attach the dispatcher.
     this.fetch();
-    this.forEach(function(todoItem) { todoItem.dispatcher = options.dispatcher; });
+    this.forEach(function(todoItem) {
+      todoItem.dispatcher = options.dispatcher;
+    });
   },
 
   dispatchCallback: function(payload) {
@@ -65,7 +71,9 @@ var TodoStore = Backbone.Collection.extend({
         });
         // Destroy todoItem before removing from collection.
         // Because removed models have no collection property which is required by LocalStorage.
-        completed.forEach(function(todoItem) { todoItem.destroy() });
+        completed.forEach(function(todoItem) {
+          todoItem.destroy()
+        });
         this.remove(completed);
         break;
     }
