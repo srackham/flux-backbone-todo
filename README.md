@@ -1,7 +1,7 @@
 # Flux Backbone Todos Example
 
-- **Published**: Version 1.1.0 (30 November 2014), persist Todos to LocalStorage.
-- **Published**: Version 1.0.0 (14 November 2014).
+- **[Version 1.1.0](https://github.com/srackham/flux-backbone-todo/tree/1.1.0)** (30 November 2014), persist Todos to LocalStorage.
+- **[Version 1.0.0](https://github.com/srackham/flux-backbone-todo/tree/1.0.0)** (14 November 2014).
 
 This didactic Todo app was written to illustrate the
 [Flux](http://facebook.github.io/react/blog/2014/05/06/flux.html) DSV
