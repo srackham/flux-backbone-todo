@@ -7,7 +7,7 @@
 var React = require('react');
 var Flux = require('flux');
 var Backbone = require('backbone');
-var BackboneLocalStorageSync = require('./backbone-localstorage.js');
+var BackboneLocalStorageSync = require('backbone-localstorage-sync');
 
 /*
  Dispatcher actions.
