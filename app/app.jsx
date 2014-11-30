@@ -24,7 +24,7 @@ var TodoItem = Backbone.Model.extend({
   sync: BackboneLocalStorageSync('flux-backbone-todo'),
 
   initialize: function(attributes, options) {
-    this.dispatcher = options.dispatcher;
+    this.dispatcher = TodoItem.dispatcher;
   }
 
 });
@@ -38,6 +38,7 @@ var TodoStore = Backbone.Collection.extend({
 
   initialize: function(models, options) {
     this.dispatcher = options.dispatcher;
+    this.model.dispatcher = this.dispatcher;
     this.dispatchId = this.dispatcher.register(this.dispatchCallback.bind(this));
     this.on('sync', function(model, resp) {
       console.log('SUCCESS: sync response:', resp);
@@ -45,17 +46,13 @@ var TodoStore = Backbone.Collection.extend({
     this.on('error', function(model, resp) {
       console.log('ERROR: sync error:', resp);
     });
-    // Load models from localStorage and attach the dispatcher.
-    this.fetch();
-    this.forEach(function(todoItem) {
-      todoItem.dispatcher = options.dispatcher;
-    });
+    this.fetch(); // Load models from localStorage.
   },
 
   dispatchCallback: function(payload) {
     switch (payload.action) {
       case ADD_TODO:
-        var todoItem = this.add({text: payload.text}, {dispatcher: this.dispatcher});
+        var todoItem = this.add({text: payload.text});
         todoItem.save();
         break;
       case TOGGLE_TODO:
