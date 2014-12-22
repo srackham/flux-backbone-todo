@@ -28,7 +28,8 @@
     "react": "^0.12.1"
   },
   "devDependencies": {
-    "jsx-loader": "^0.12.2",
+    "6to5": "^1.15.0",
+    "6to5-loader": "^0.2.4",
     "webpack": "^1.4.13"
   }
 }
