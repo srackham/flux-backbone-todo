@@ -4,22 +4,22 @@
  */
 'use strict';
 
-var React = require('react');
-var Flux = require('flux');
-var Backbone = require('backbone');
-var BackboneLocalStorageSync = require('backbone-localstorage-sync');
+import React from 'react';
+import Flux from 'flux';
+import Backbone from 'backbone';
+import BackboneLocalStorageSync from 'backbone-localstorage-sync';
 
 /*
  Dispatcher actions.
  */
-var ADD_TODO = 'ADD_TODO';
-var TOGGLE_TODO = 'TOGGLE_TODO';
-var CLEAR_TODOS = 'CLEAR_TODOS';
+const ADD_TODO = 'ADD_TODO';
+const TOGGLE_TODO = 'TOGGLE_TODO';
+const CLEAR_TODOS = 'CLEAR_TODOS';
 
 /*
  Todo item model.
  */
-var TodoItem = Backbone.Model.extend({
+let TodoItem = Backbone.Model.extend({
   defaults: {text: '', complete: false},
   sync: BackboneLocalStorageSync('flux-backbone-todo'),
 
@@ -32,7 +32,7 @@ var TodoItem = Backbone.Model.extend({
 /*
  Todo collection store.
  */
-var TodoStore = Backbone.Collection.extend({
+let TodoStore = Backbone.Collection.extend({
   model: TodoItem,
   sync: BackboneLocalStorageSync('flux-backbone-todo'),
 
@@ -52,7 +52,7 @@ var TodoStore = Backbone.Collection.extend({
   dispatchCallback: function(payload) {
     switch (payload.action) {
       case ADD_TODO:
-        var todoItem = this.add({text: payload.text});
+        let todoItem = this.add({text: payload.text});
         todoItem.save();
         break;
       case TOGGLE_TODO:
@@ -60,7 +60,7 @@ var TodoStore = Backbone.Collection.extend({
         payload.todoItem.save();
         break;
       case CLEAR_TODOS:
-        var completed = this.filter(function(todoItem) {
+        let completed = this.filter(function(todoItem) {
           return todoItem.get('complete');
         });
         // Destroy todoItem before removing from collection.
@@ -78,14 +78,14 @@ var TodoStore = Backbone.Collection.extend({
 /*
  Todo form.
  */
-var TodoFormComponent = React.createClass({
+let TodoFormComponent = React.createClass({
   propTypes: {
     store: React.PropTypes.instanceOf(TodoStore)
   },
 
   handleAddTodo: function(event) {
     event.preventDefault();
-    var text = this.refs.text.getDOMNode();
+    let text = this.refs.text.getDOMNode();
     if (text.value.length > 0) {
       this.props.store.dispatcher.dispatch({action: ADD_TODO, text: text.value});
       text.value = '';
@@ -112,7 +112,7 @@ var TodoFormComponent = React.createClass({
 /*
  Todo list component.
  */
-var TodoListComponent = React.createClass({
+let TodoListComponent = React.createClass({
   propTypes: {
     store: React.PropTypes.instanceOf(TodoStore).isRequired
   },
@@ -128,7 +128,7 @@ var TodoListComponent = React.createClass({
   },
 
   render: function() {
-    var items = this.props.store.map(function(todoItem) {
+    let items = this.props.store.map(function(todoItem) {
       return (
         <li key={todoItem.cid}>
           <TodoItemComponent todoItem={todoItem} />
@@ -141,7 +141,7 @@ var TodoListComponent = React.createClass({
 /*
  Todo item component.
  */
-var TodoItemComponent = React.createClass({
+let TodoItemComponent = React.createClass({
   propTypes: {
     todoItem: React.PropTypes.instanceOf(TodoItem).isRequired
   },
@@ -161,8 +161,8 @@ var TodoItemComponent = React.createClass({
   },
 
   render: function() {
-    var complete = this.props.todoItem.get('complete');
-    var style = {cursor: 'pointer', textDecoration: complete ? 'line-through' : ''};
+    let complete = this.props.todoItem.get('complete');
+    let style = {cursor: 'pointer', textDecoration: complete ? 'line-through' : ''};
     return (
       <span style={style} onClick={this.handleToggleTodo}>
           {this.props.todoItem.get('text')}
@@ -175,8 +175,8 @@ var TodoItemComponent = React.createClass({
 /*
  Instantiate Todo application.
  */
-var dispatcher = new Flux.Dispatcher();
-var todoStore = new TodoStore(null, {dispatcher: dispatcher});
+let dispatcher = new Flux.Dispatcher();
+let todoStore = new TodoStore(null, {dispatcher: dispatcher});
 
 React.render(
   <div>
