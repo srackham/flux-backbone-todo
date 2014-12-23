@@ -23,7 +23,7 @@ let TodoItem = Backbone.Model.extend({
   defaults: {text: '', complete: false},
   sync: BackboneLocalStorageSync('flux-backbone-todo'),
 
-  initialize: function(attributes, options) {
+  initialize(attributes, options) {
     this.dispatcher = TodoItem.dispatcher;
   }
 
@@ -36,20 +36,16 @@ let TodoStore = Backbone.Collection.extend({
   model: TodoItem,
   sync: BackboneLocalStorageSync('flux-backbone-todo'),
 
-  initialize: function(models, options) {
+  initialize(models, options) {
     this.dispatcher = options.dispatcher;
     this.model.dispatcher = this.dispatcher;
     this.dispatchId = this.dispatcher.register(this.dispatchCallback.bind(this));
-    this.on('sync', function(model, resp) {
-      console.log('SUCCESS: sync response:', resp);
-    });
-    this.on('error', function(model, resp) {
-      console.log('ERROR: sync error:', resp);
-    });
+    this.on('sync', (model, resp) => console.log('SUCCESS: sync response:', resp));
+    this.on('error', (model, resp) => console.log('ERROR: sync error:', resp));
     this.fetch(); // Load models from localStorage.
   },
 
-  dispatchCallback: function(payload) {
+  dispatchCallback(payload) {
     switch (payload.action) {
       case ADD_TODO:
         let todoItem = this.add({text: payload.text});
@@ -60,14 +56,10 @@ let TodoStore = Backbone.Collection.extend({
         payload.todoItem.save();
         break;
       case CLEAR_TODOS:
-        let completed = this.filter(function(todoItem) {
-          return todoItem.get('complete');
-        });
+        let completed = this.filter(todoItem => todoItem.get('complete'));
         // Destroy todoItem before removing from collection.
         // Because removed models have no collection property which is required by LocalStorage.
-        completed.forEach(function(todoItem) {
-          todoItem.destroy()
-        });
+        completed.forEach(todoItem => todoItem.destroy());
         this.remove(completed);
         break;
     }
@@ -83,7 +75,7 @@ let TodoFormComponent = React.createClass({
     store: React.PropTypes.instanceOf(TodoStore)
   },
 
-  handleAddTodo: function(event) {
+  handleAddTodo(event) {
     event.preventDefault();
     let text = this.refs.text.getDOMNode();
     if (text.value.length > 0) {
@@ -92,11 +84,11 @@ let TodoFormComponent = React.createClass({
     }
   },
 
-  handleClearTodos: function() {
+  handleClearTodos() {
     this.props.store.dispatcher.dispatch({action: CLEAR_TODOS});
   },
 
-  render: function() {
+  render() {
     return (
       <div>
         <form  onSubmit={this.handleAddTodo}>
@@ -117,23 +109,22 @@ let TodoListComponent = React.createClass({
     store: React.PropTypes.instanceOf(TodoStore).isRequired
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.props.store.on('add remove reset',
       this.forceUpdate.bind(this, null)
     );
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     this.props.store.off(null, null, this);
   },
 
-  render: function() {
-    let items = this.props.store.map(function(todoItem) {
-      return (
+  render() {
+    let items = this.props.store.map(todoItem =>
         <li key={todoItem.cid}>
           <TodoItemComponent todoItem={todoItem} />
-        </li>);
-    });
+        </li>
+    );
     return <ul>{items}</ul>;
   }
 });
@@ -146,21 +137,21 @@ let TodoItemComponent = React.createClass({
     todoItem: React.PropTypes.instanceOf(TodoItem).isRequired
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.props.todoItem.on('change',
       this.forceUpdate.bind(this, null)
     );
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     this.props.todoItem.off(null, null, this);
   },
 
-  handleToggleTodo: function() {
+  handleToggleTodo() {
     this.props.todoItem.dispatcher.dispatch({action: TOGGLE_TODO, todoItem: this.props.todoItem});
   },
 
-  render: function() {
+  render() {
     let complete = this.props.todoItem.get('complete');
     let style = {cursor: 'pointer', textDecoration: complete ? 'line-through' : ''};
     return (
