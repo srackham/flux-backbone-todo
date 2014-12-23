@@ -7,7 +7,7 @@
 import React from 'react';
 import Flux from 'flux';
 import Backbone from 'backbone';
-import BackboneLocalStorageSync from 'backbone-localstorage-sync';
+import getLocalStorageSync from 'backbone-localstorage-sync';
 
 /*
  Dispatcher actions.
@@ -21,7 +21,7 @@ const CLEAR_TODOS = 'CLEAR_TODOS';
  */
 let TodoItem = Backbone.Model.extend({
   defaults: {text: '', complete: false},
-  sync: BackboneLocalStorageSync('flux-backbone-todo'),
+  sync: getLocalStorageSync('flux-backbone-todo'),
 
   initialize(attributes, options) {
     this.dispatcher = TodoItem.dispatcher;
@@ -34,7 +34,7 @@ let TodoItem = Backbone.Model.extend({
  */
 let TodoStore = Backbone.Collection.extend({
   model: TodoItem,
-  sync: BackboneLocalStorageSync('flux-backbone-todo'),
+  sync: getLocalStorageSync('flux-backbone-todo'),
 
   initialize(models, options) {
     this.dispatcher = options.dispatcher;
