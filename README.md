@@ -1,5 +1,6 @@
 # Flux Backbone Todos Example
 
+- **[Version 1.2.0](https://github.com/srackham/flux-backbone-todo/tree/1.2.0)** (23 December 2014), convert app to ES6 using 6to5 transpiler.
 - **[Version 1.1.0](https://github.com/srackham/flux-backbone-todo/tree/1.1.0)** (30 November 2014), persist Todos to LocalStorage.
 - **[Version 1.0.0](https://github.com/srackham/flux-backbone-todo/tree/1.0.0)** (14 November 2014).
 

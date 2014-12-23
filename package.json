@@ -2,7 +2,7 @@
   "name": "flux-backbone-todo",
   "author": "Stuart Rackham",
   "description": "Didactic Todo app written using Flux, Backbone and React.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "keywords": [
     "flux",
     "react",
