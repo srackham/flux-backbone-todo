@@ -48,19 +48,14 @@ let TodoStore = Backbone.Collection.extend({
   dispatchCallback(payload) {
     switch (payload.action) {
       case ADD_TODO:
-        let todoItem = this.add({text: payload.text});
-        todoItem.save();
+        this.create({text: payload.text});
         break;
       case TOGGLE_TODO:
-        payload.todoItem.set('complete', !payload.todoItem.get('complete'));
-        payload.todoItem.save();
+        payload.todoItem.save('complete', !payload.todoItem.get('complete'));
         break;
       case CLEAR_TODOS:
         let completed = this.filter(todoItem => todoItem.get('complete'));
-        // Destroy todoItem before removing from collection.
-        // Because removed models have no collection property which is required by LocalStorage.
         completed.forEach(todoItem => todoItem.destroy());
-        this.remove(completed);
         break;
     }
   }
