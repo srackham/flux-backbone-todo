@@ -8,6 +8,8 @@ This didactic Todo app was written to illustrate the
 [Flux](http://facebook.github.io/react/blog/2014/05/06/flux.html) DSV
 (Dispatch Store View) design pattern.
 
+[Live Demo](http://srackham.github.io/flux-backbone-todo/)
+
 Flux is a design pattern for building scaleable applications using a
 Unidirectional Data Flow (it is not a Web development framework), the
 Flux library implements a
