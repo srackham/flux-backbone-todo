@@ -22,6 +22,9 @@ cp -p ./app/app.js ./app/app.js.map ./app/index.html ./gh-pages/
 
 cd ./gh-pages/
 
+# Add changes to git.
+git add .
+
 # Commit changes.
 msg="Rebuild Github Pages."
 if [ $# -eq 1 ]
