@@ -17,7 +17,7 @@ module.exports = {
       {
         test: /\.jsx$/,
         loader: '6to5-loader',
-        query: {modules: 'commonInterop'}
+        query: {modules: 'common'}
       },
       {
         test: /\.json$/,
