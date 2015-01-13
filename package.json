@@ -33,7 +33,6 @@
     "webpack": "^1.4.15"
   },
   "scripts": {
-    "start": "node ./bin/server.js",
-    "build": "webpack && cp app/index.html app/app.js app/app.js.map gh-pages/"
+    "start": "node ./bin/server.js"
   }
 }
