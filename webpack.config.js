@@ -16,6 +16,7 @@ module.exports = {
       },
       {
         test: /\.jsx$/,
+        exclude: /node_modules/,
         loader: '6to5-loader',
         query: {modules: 'common'}
       },
