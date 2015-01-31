@@ -28,11 +28,13 @@
     "react": "^0.12.2"
   },
   "devDependencies": {
-    "6to5": "^2.12.6",
-    "6to5-loader": "^2.0.0",
-    "webpack": "^1.4.15"
+    "6to5": "^3.2.1",
+    "6to5-loader": "^3.0.0",
+    "webpack": "^1.5.3"
   },
   "scripts": {
+    "build": "webpack",
+    "push-website": "./deploy-gh-pages.sh",
     "start": "node ./bin/server.js"
   }
 }
