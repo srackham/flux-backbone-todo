@@ -1,24 +1,22 @@
-var webpack = require('webpack');
-
 module.exports = {
   cache: true,
-  entry: './app/app.jsx',
+  entry: './src/index.jsx',
   output: {
-    path: __dirname + '/app',
-    filename: 'app.js'
+    path: __dirname + '/build/',
+    filename: 'bundle.js'
   },
   devtool: 'source-map',
   module: {
     loaders: [
       {
-        test: /\.less$/,
-        loader: 'style!css!less'
+        test: /\.jsx$/,
+        include: /src/,
+        loader: 'babel-loader',
+        query: {modules: 'common'}
       },
       {
-        test: /\.jsx$/,
-        exclude: /node_modules/,
-        loader: '6to5-loader',
-        query: {modules: 'common'}
+        test: /\.less$/,
+        loader: 'style!css!less'
       },
       {
         test: /\.json$/,

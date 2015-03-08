@@ -18,7 +18,7 @@ fi
 webpack
 
 # Copy built files to gh-pages.
-cp -p ./app/app.js ./app/app.js.map ./app/index.html ./gh-pages/
+cp -p ./build/* ./gh-pages/
 
 cd ./gh-pages/
 
