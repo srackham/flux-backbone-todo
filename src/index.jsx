@@ -65,10 +65,10 @@ let TodoStore = Backbone.Collection.extend({
 /*
  Todo form.
  */
-let TodoFormComponent = React.createClass({
-  propTypes: {
+class TodoFormComponent extends React.Component {
+  static propTypes = {
     store: React.PropTypes.instanceOf(TodoStore)
-  },
+  };
 
   handleAddTodo(event) {
     event.preventDefault();
@@ -77,42 +77,42 @@ let TodoFormComponent = React.createClass({
       this.props.store.dispatcher.dispatch({action: ADD_TODO, text: text.value});
       text.value = '';
     }
-  },
+  }
 
   handleClearTodos() {
     this.props.store.dispatcher.dispatch({action: CLEAR_TODOS});
-  },
+  }
 
   render() {
     return (
       <div>
-        <form  onSubmit={this.handleAddTodo}>
+        <form  onSubmit={this.handleAddTodo.bind(this)}>
           <input ref='text' type='text'  placeholder='New Todo' autofocus='true' />
           <input type='submit' value='Add Todo' />
         </form>
-        <button onClick={this.handleClearTodos}>Clear Completed</button>
+        <button onClick={this.handleClearTodos.bind(this)}>Clear Completed</button>
       </div>
     );
   }
-});
+}
 
 /*
  Todo list component.
  */
-let TodoListComponent = React.createClass({
-  propTypes: {
+class TodoListComponent extends React.Component {
+  static propTypes = {
     store: React.PropTypes.instanceOf(TodoStore).isRequired
-  },
+  };
 
   componentDidMount() {
     this.props.store.on('add remove reset',
       this.forceUpdate.bind(this, null)
     );
-  },
+  }
 
   componentWillUnmount() {
     this.props.store.off(null, null, this);
-  },
+  }
 
   render() {
     let items = this.props.store.map(todoItem =>
@@ -122,41 +122,41 @@ let TodoListComponent = React.createClass({
     );
     return <ul>{items}</ul>;
   }
-});
+}
 
 /*
  Todo item component.
  */
-let TodoItemComponent = React.createClass({
-  propTypes: {
+class TodoItemComponent extends React.Component {
+  static propTypes = {
     todoItem: React.PropTypes.instanceOf(TodoItem).isRequired
-  },
+  };
 
   componentDidMount() {
     this.props.todoItem.on('change',
       this.forceUpdate.bind(this, null)
     );
-  },
+  }
 
   componentWillUnmount() {
     this.props.todoItem.off(null, null, this);
-  },
+  }
 
   handleToggleTodo() {
     this.props.todoItem.dispatcher.dispatch({action: TOGGLE_TODO, todoItem: this.props.todoItem});
-  },
+  }
 
   render() {
     let complete = this.props.todoItem.get('complete');
     let style = {cursor: 'pointer', textDecoration: complete ? 'line-through' : ''};
     return (
-      <span style={style} onClick={this.handleToggleTodo}>
+      <span style={style} onClick={this.handleToggleTodo.bind(this)}>
           {this.props.todoItem.get('text')}
       </span>
     );
   }
+}
 
-});
 
 /*
  Instantiate Todo application.
@@ -170,8 +170,8 @@ React.render(
     <TodoFormComponent store={todoStore} />
     <TodoListComponent store={todoStore} />
     <p>
-    Want a second fully synchronized list? Just declare another list component: no code required,
-    no events to wire up!
+      Want a second fully synchronized list? Just declare another list component: no code required,
+      no events to wire up!
     </p>
     <TodoListComponent store={todoStore} />
   </div>,

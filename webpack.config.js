@@ -12,7 +12,7 @@ module.exports = {
         test: /\.jsx$/,
         include: /src/,
         loader: 'babel-loader',
-        query: {modules: 'common'}
+        query: {modules: 'common', playground: true}  // playground option for static initializers.
       },
       {
         test: /\.less$/,
