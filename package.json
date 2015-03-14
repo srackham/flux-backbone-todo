@@ -24,15 +24,17 @@
     "react": "^0.13.0"
   },
   "devDependencies": {
-    "babel": "^4.7.8",
-    "babel": "^4.7.8",
+    "babel": "^4.7.12",
+    "babel-eslint": "^2.0.0",
     "babel-loader": "^4.1.0",
+    "eslint": "^0.16.2",
     "webpack": "^1.7.3",
     "webpack-dev-server": "^1.7.0"
   },
   "scripts": {
     "build": "webpack --progress --colors",
     "deploy-gh-pages": "./deploy-gh-pages.sh",
+    "lint": "eslint --ext .jsx ./src",
     "push": "git push --tags origin master",
     "start": "webpack-dev-server --info false --content-base build"
   }

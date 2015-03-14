@@ -1,0 +1,11 @@
+{
+  "parser": "babel-eslint",
+  "env":  {
+    "browser": true
+  },
+  "rules": {
+    "global-strict": 0,
+    "quotes": [2, "single", "avoid-escape"],
+    "no-console": 0
+  }
+}

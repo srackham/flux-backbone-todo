@@ -4,6 +4,10 @@
  */
 'use strict';
 
+// eslint exceptions
+/* global TodoFormComponent, TodoListComponent */
+/* global React, Flux, Backbone, getLocalStorageSync */
+
 import React from 'react';
 import Flux from 'flux';
 import Backbone from 'backbone';
@@ -23,7 +27,7 @@ let TodoItem = Backbone.Model.extend({
   defaults: {text: '', complete: false},
   sync: getLocalStorageSync('flux-backbone-todo'),
 
-  initialize(attributes, options) {
+  initialize(attributes, options) { // eslint-disable-line no-unused-vars
     this.dispatcher = TodoItem.dispatcher;
   }
 
@@ -86,8 +90,8 @@ class TodoFormComponent extends React.Component {
   render() {
     return (
       <div>
-        <form  onSubmit={this.handleAddTodo.bind(this)}>
-          <input ref='text' type='text'  placeholder='New Todo' autofocus='true' />
+        <form onSubmit={this.handleAddTodo.bind(this)}>
+          <input ref='text' type='text' placeholder='New Todo' autofocus='true' />
           <input type='submit' value='Add Todo' />
         </form>
         <button onClick={this.handleClearTodos.bind(this)}>Clear Completed</button>
