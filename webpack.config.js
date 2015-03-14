@@ -1,6 +1,6 @@
 module.exports = {
   cache: true,
-  entry: './src/index.jsx',
+  entry: './src/index.js',
   output: {
     path: __dirname + '/build/',
     filename: 'bundle.js'
@@ -9,7 +9,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx$/,
+        test: /\.js$/,
         include: /src/,
         loader: 'babel-loader',
         query: {modules: 'common', playground: true}  // playground option for static initializers.

@@ -34,7 +34,7 @@
   "scripts": {
     "build": "webpack --progress --colors",
     "deploy-gh-pages": "./deploy-gh-pages.sh",
-    "lint": "eslint --ext .jsx ./src",
+    "lint": "eslint ./src",
     "push": "git push --tags origin master",
     "start": "webpack-dev-server --info false --content-base build"
   }
