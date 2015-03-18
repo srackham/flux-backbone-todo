@@ -1,0 +1,6 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "no-var": 2
+  }
+}
