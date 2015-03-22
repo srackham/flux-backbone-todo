@@ -11,6 +11,7 @@
     "quotes": [2, "single", "avoid-escape"],
     "no-console": 0,
     "no-trailing-spaces": 2,
+    "no-unused-vars": [2, {"vars": "local"}],
     "semi": [1, "never"],
     "space-in-parens": [1, "never"],
     "space-infix-ops": 1,

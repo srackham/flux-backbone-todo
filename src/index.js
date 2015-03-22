@@ -4,10 +4,6 @@
  */
 'use strict'
 
-// eslint globals.
-/* global TodoFormComponent, TodoListComponent */
-/* global React, Flux, Backbone, getLocalStorageSync */
-
 import React from 'react'
 import Flux from 'flux'
 import Backbone from 'backbone'
@@ -27,9 +23,9 @@ let TodoItem = Backbone.Model.extend({
   defaults: {text: '', complete: false},
   sync: getLocalStorageSync('flux-backbone-todo'),
 
-  initialize(attributes, options) { // eslint-disable-line no-unused-vars
+  initialize() {
     this.dispatcher = TodoItem.dispatcher
-  }
+  },
 
 })
 
@@ -62,13 +58,14 @@ let TodoStore = Backbone.Collection.extend({
         completed.forEach(todoItem => todoItem.destroy())
         break
     }
-  }
+  },
 
 })
 
 /*
  Todo form.
  */
+/* global TodoFormComponent */
 class TodoFormComponent extends React.Component {
   static propTypes = {
     store: React.PropTypes.instanceOf(TodoStore)
@@ -103,6 +100,7 @@ class TodoFormComponent extends React.Component {
 /*
  Todo list component.
  */
+/* global TodoListComponent */
 class TodoListComponent extends React.Component {
   static propTypes = {
     store: React.PropTypes.instanceOf(TodoStore).isRequired
