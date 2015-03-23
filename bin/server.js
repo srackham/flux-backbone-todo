@@ -59,11 +59,6 @@ else {
   var port = process.argv[3] || 8888
 
   var server = createServer(baseDirectory)
-//  process.on('SIGINT', function() {
-//    console.log('SIGINT')
-//    server.close()
-//    process.exit()
-//  })
   server.listen(parseInt(port, 10))
 
   console.log('Server URL: http://localhost:' + port + '/\nServed directory: ' + baseDirectory + '\nCTRL + C to shutdown')

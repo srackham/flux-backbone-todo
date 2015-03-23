@@ -28,13 +28,16 @@
     "babel-eslint": "^2.0.2",
     "babel-loader": "^4.2.0",
     "eslint": "^0.17.1",
-    "webpack": "^1.7.3"
+    "mocha": "^2.2.1",
+    "webpack": "^1.7.3",
+    "zombie": "^3.1.0"
   },
   "scripts": {
     "build": "webpack --progress --colors",
     "deploy-gh-pages": "./deploy-gh-pages.sh",
-    "lint": "eslint --no-color --config babel-eslint.json ./src && eslint --no-color ./bin",
+    "lint": "eslint --config babel-eslint.json ./src && eslint ./bin ./test",
     "push": "git push --tags origin master",
-    "start": "node ./bin/server.js ../build"
+    "start": "node ./bin/server.js ../build",
+    "test": "mocha test/functional/"
   }
 }
