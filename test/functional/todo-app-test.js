@@ -9,7 +9,7 @@ process.env.NODE_ENV = 'test'
 var createServer = require('../../bin/server.js')
 var Browser = require('zombie')
 // Browser.debug = true
-Browser.silent = true
+Browser.silent = false
 
 describe('todo app', function() {
 
@@ -46,33 +46,38 @@ describe('todo app', function() {
     })
   })
 
-  describe('adding a new todo', function() {
+  var todos = [1, 2, 3]
+  todos.forEach(function(n) {
+    describe('adding todo ' + n, function() {
 
-    before(function(done) {
-      this.browser
-        .fill('form input[type=text]', 'new todo')
-        .pressButton('Add Todo', done)
+      var text = 'todo' + n
+
+      before(function(done) {
+        this.browser
+          .fill('form input[type=text]', text)
+          .pressButton('Add Todo', done)
+      })
+
+      it('should be successful', function() {
+        this.browser.assert.success()
+      })
+
+      it('should add one todo', function() {
+        this.browser.assert.elements(LIST1, n)
+        this.browser.assert.elements(LIST2, n)
+      })
+
+      it('should append the new todo to the end of the list', function() {
+        this.browser.assert.text(LIST1_LAST_SPAN, text)
+        this.browser.assert.text(LIST2_LAST_SPAN, text)
+      })
+
+      it('should style the todo with normal text', function() {
+        this.browser.assert.style(LIST1_LAST_SPAN, 'text-decoration', '')
+        this.browser.assert.style(LIST2_LAST_SPAN, 'text-decoration', '')
+      })
+
     })
-
-    it('should be successful', function() {
-      this.browser.assert.success()
-    })
-
-    it('should add one todo', function() {
-      this.browser.assert.elements(LIST1, 1)
-      this.browser.assert.elements(LIST2, 1)
-    })
-
-    it('should append the new todo to the end of the list', function() {
-      this.browser.assert.text(LIST1_LAST_SPAN, 'new todo')
-      this.browser.assert.text(LIST2_LAST_SPAN, 'new todo')
-    })
-
-    it('should style the todo with normal text', function() {
-      this.browser.assert.style(LIST1_LAST_SPAN, 'text-decoration', '')
-      this.browser.assert.style(LIST2_LAST_SPAN, 'text-decoration', '')
-    })
-
   })
 
   // Click the todo item 3 times and check the text style toggles.
