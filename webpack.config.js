@@ -3,7 +3,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: __dirname + '/build/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devtool: 'source-map',
   module: {
@@ -12,16 +12,16 @@ module.exports = {
         test: /\.js$/,
         include: /src/,
         loader: 'babel-loader',
-        query: {modules: 'common', playground: true}  // playground option for static initializers.
+        query: {modules: 'common', playground: true},  // playground option for static initializers.
       },
       {
         test: /\.less$/,
-        loader: 'style!css!less'
+        loader: 'style!css!less',
       },
       {
         test: /\.json$/,
-        loader: 'json'
-      }
-    ]
-  }
-};
+        loader: 'json',
+      },
+    ],
+  },
+}

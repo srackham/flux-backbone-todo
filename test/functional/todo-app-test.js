@@ -23,6 +23,10 @@ describe('todo app', function() {
     this.browser = new Browser({site: 'http://localhost:3000'})
   })
 
+  after(function(done) {
+    this.server.close(done)
+  })
+
   describe('visit home page', function() {
     before(function(done) {
       this.browser.visit('/', done)
@@ -31,17 +35,20 @@ describe('todo app', function() {
     it('should be successful', function() {
       this.browser.assert.success()
     })
+
     it('should display page heading', function() {
       this.browser.assert.text('h3', 'Todos')
+    })
+
+    it('should have no todo items', function() {
+      this.browser.assert.elements(LIST1, 0)
+      this.browser.assert.elements(LIST2, 0)
     })
   })
 
   describe('adding a new todo', function() {
 
-    var before_list_length
-
     before(function(done) {
-      before_list_length = this.browser.queryAll(LIST1 + ' li').length
       this.browser
         .fill('form input[type=text]', 'new todo')
         .pressButton('Add Todo', done)
@@ -52,8 +59,8 @@ describe('todo app', function() {
     })
 
     it('should add one todo', function() {
-      this.browser.assert.elements(LIST1, before_list_length + 1)
-      this.browser.assert.elements(LIST2, before_list_length + 1)
+      this.browser.assert.elements(LIST1, 1)
+      this.browser.assert.elements(LIST2, 1)
     })
 
     it('should append the new todo to the end of the list', function() {
@@ -68,7 +75,7 @@ describe('todo app', function() {
 
   })
 
-  // Click the todo item 3 times and check the style toggles.
+  // Click the todo item 3 times and check the text style toggles.
   var completed_values = [false, true, false]
   completed_values.forEach(function(completed) {
     describe('clicking on a ' + (completed ? 'done' : 'pending') + ' todo', function() {
@@ -92,10 +99,7 @@ describe('todo app', function() {
 
   describe('clearing completed todos', function() {
 
-    var before_list_length
-
     before(function(done) {
-      before_list_length = this.browser.queryAll(LIST1 + ' li').length
       this.browser.pressButton('Clear Completed', done)
     })
 
@@ -104,14 +108,10 @@ describe('todo app', function() {
     })
 
     it('should remove one todo', function() {
-      this.browser.assert.elements(LIST1, before_list_length - 1)
-      this.browser.assert.elements(LIST2, before_list_length - 1)
+      this.browser.assert.elements(LIST1, 0)
+      this.browser.assert.elements(LIST2, 0)
     })
 
-  })
-
-  after(function(done) {
-    this.server.close(done)
   })
 
 })

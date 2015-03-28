@@ -167,6 +167,11 @@ class TodoItemComponent extends React.Component {
 let dispatcher = new Flux.Dispatcher()
 let todoStore = new TodoStore(null, {dispatcher: dispatcher})
 
+if (navigator.userAgent.indexOf('Zombie.js') >= 0) {
+  // Clear data store prior to testing.
+  todoStore.reset()
+}
+
 React.render(
   <div>
     <h3>Todos</h3>
