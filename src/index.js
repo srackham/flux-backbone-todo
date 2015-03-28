@@ -103,7 +103,8 @@ class TodoFormComponent extends React.Component {
 /* global TodoListComponent */
 class TodoListComponent extends React.Component {
   static propTypes = {
-    store: React.PropTypes.instanceOf(TodoStore).isRequired
+    store: React.PropTypes.instanceOf(TodoStore).isRequired,
+    id: React.PropTypes.string,
   }
 
   componentDidMount() {
@@ -122,7 +123,7 @@ class TodoListComponent extends React.Component {
           <TodoItemComponent todoItem={todoItem} />
         </li>
     )
-    return <ul>{items}</ul>
+    return <ul id={this.props.id}>{items}</ul>
   }
 }
 
@@ -131,7 +132,7 @@ class TodoListComponent extends React.Component {
  */
 class TodoItemComponent extends React.Component {
   static propTypes = {
-    todoItem: React.PropTypes.instanceOf(TodoItem).isRequired
+    todoItem: React.PropTypes.instanceOf(TodoItem).isRequired,
   }
 
   componentDidMount() {
@@ -170,12 +171,12 @@ React.render(
   <div>
     <h3>Todos</h3>
     <TodoFormComponent store={todoStore} />
-    <TodoListComponent store={todoStore} />
+    <TodoListComponent id="list1" store={todoStore} />
     <p>
       Want a second fully synchronized list? Just declare another list component: no code required,
       no events to wire up!
     </p>
-    <TodoListComponent store={todoStore} />
+    <TodoListComponent id="list2" store={todoStore} />
   </div>,
   document.getElementById('app')
 )
