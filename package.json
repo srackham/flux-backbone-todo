@@ -24,10 +24,10 @@
     "react": "^0.13.1"
   },
   "devDependencies": {
-    "babel": "^4.7.16",
+    "babel": "^5.0.2",
     "babel-eslint": "^2.0.2",
-    "babel-loader": "^4.2.0",
-    "eslint": "^0.17.1",
+    "babel-loader": "^5.0.0",
+    "eslint": "^0.18.0",
     "mocha": "^2.2.1",
     "webpack": "^1.7.3",
     "zombie": "^3.1.1"
