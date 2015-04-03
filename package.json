@@ -3,7 +3,7 @@
   "author": "Stuart Rackham",
   "description": "Didactic Todo app written using Flux, Backbone and React.",
   "license": "MIT",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "keywords": [
     "flux",
     "react",
